@@ -2,6 +2,7 @@
 var correct = 0;
 var incorrect = 0;
 var unanswered = 8;
+var time = 30000;
 //create array of objects for questions;
 var questions = [
     {
@@ -42,20 +43,61 @@ console.log(questions[0].question);
 console.log(questions[0].answer);
 //display "start" button at the beginning
 
-//when "start" is pressed, change the display to show the 8 questions
-listQuestions();
+//when "start" is pressed, change the display to show the 8 questions and run timer
+$("#start").on("click", function() {
+    
+    setTimeout(countDown, 30000);
+    listQuestions();
+    timeUp();
+
+})
+
 function listQuestions() {
-    $(".display").append("<span><p>Time Remaining: <div id='timer'></div></p></span><br>");
+    
 
     for (i=0; i <= questions.length; i++) {
         var ask = questions[i].question;
         var guess = questions[i].answer;
         console.log(ask);
-        var trueButton = "<button val='true' id=''>True</button>";
-        var falseButton = "<button val='false' id=''>False</button>";
-        $(".display").append(ask + ": " + guess + "<br></br>" + trueButton + falseButton + "<br></br>" );
+        //var trueButton = $("<button>");
+        //console.log(trueButton);
+        //trueButton.attr("val", "true");
+        //var falseButton = $("<button>");
+        //console.log(falseButton);
+        //falseButton.attr("val", "false");
+
+        $(".display").append(ask + ": " + guess + "<br></br>");
         
     }
+}
+function countDown() {
+    time--;
+    var currentTime = timeConverter(time);
+    $(".display").html("<span><p>Time Remaining: <div id='time-left'></div></p></span><br>");
+    $("#time-left").text(currentTime);
+}
+function timeConverter(t) {
+
+    //  Takes the current time in seconds and convert it to minutes and seconds (mm:ss).
+    var minutes = Math.floor(t / 60);
+    var seconds = t - (minutes * 60);
+  
+    if (seconds < 10) {
+      seconds = "0" + seconds;
+    }
+  
+    if (minutes === 0) {
+      minutes = "00";
+    }
+  
+    else if (minutes < 10) {
+      minutes = "0" + minutes;
+    }
+  
+    return minutes + ":" + seconds;
+}
+function timeUp() {
+
 }
 //calculate questions 1-8
 //if correct answer is selected, add to "correct" variable and subtract from unanswered
