@@ -2,7 +2,7 @@
 var correct = 0;
 var incorrect = 0;
 var answered = 0;
-var unaswered = 0;
+var unanswered = 0;
 
 //create array of objects for questions;
 var questions = [
@@ -58,9 +58,10 @@ $(document).ready(function () {
 
     $(document).on("click", "#startButton", function(){
         displayQuestion();
+        //run timer after displayCorrect() inside of displayQuestion() runs out
+        //re-run NEW display question and add to answered variable
     });
-    //run timer after displayCorrect() inside of displayQuestion() runs out
-    //re-run NEW display question and add to answered variable
+    
 
 });
 
@@ -136,7 +137,7 @@ function displayQuestion() {
         //display correct answer
         displayCorrect();
         //increase incorrect
-        unaswered++;
+        unanswered++;
         answered++;
     }///end 
 };////////////end of displayQuestion function
@@ -155,10 +156,30 @@ function tenSeconds() {
 function endGame () {
     if (answered === 8) {
         ///rewrite .container html with "Here's how you did"
+        $(".container").html("<h2>All done, here's how you did!</h2>");
         //append .container with correct
+        $(".container").text("Correct Answers: " + correct);
         //append .container with incorrect
+        $(".container").text("Incorrect Answers: " + incorrect);
         //append .container with unanswered
+        $(".container").text("Unanswered: " + unanswered);
         //append .container with startOver button
-
+        var resetBtn = $("<button>").attr("id", "resetButton");
+        resetBtn.text("Start Over?");
+        $(".container").append(resetBtn);
+        $(document).on("click", "#resetButton", function(){
+            reset();
+        });
     }
+}
+
+///function to reset game display
+function reset() {
+    ///set all variables to 0
+    correct = 0;
+    incorrect = 0;
+    answered = 0;
+    unaswered = 0;
+    displayQuestion();
+    //repeat other timer code that went inside of the original $(document).on("click", "#startButton", function()
 }
