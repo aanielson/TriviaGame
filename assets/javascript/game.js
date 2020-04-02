@@ -1,8 +1,9 @@
-//create variables for correct answers, incorrect answers, and unanswered + timer
+//create variables for correct answers, incorrect answers 
 var correct = 0;
 var incorrect = 0;
-var unanswered = 8;
-var time = 30000;
+var answered = 0;
+var unaswered = 0;
+
 //create array of objects for questions;
 var questions = [
     {
@@ -46,88 +47,118 @@ var questions = [
         possibleAns: ["TRUE ", "FALSE "]
     },
 ];
-console.log(questions);
 
 //display "start" button at the beginning
-    //when "start" is pressed, change the display to show the 8 questions
-    //when "start" is clicked, display possible answers
-    //run timer
-    $(document).ready(function () {
-        var strtBtn = $("<button>").attr("id", "startButton");
-        strtBtn.text("Start");
-        $(".container").html(strtBtn);
-    
-        $(document).on("click", "#startButton", function(){
-            displayQuestion();
-            
-        });
-    
-    
-    
-    });
-    function displayQuestion() {
-        var randomQues = questions[Math.floor(Math.random() * questions.length)];
-        var quesDiv = $("<div>").attr("id", "quesDiv");
-        $(quesDiv).html(randomQues.question);
-        $('.container').html(quesDiv);
-        
-        var possibleAnsDiv = $("<div>").attr("id", "possibleAnsDiv");
-        var trueButton = $("<button>").attr("val", true);
-        $(trueButton).text(randomQues.possibleAns[0]);
-        var falseButton = $("<button>").attr("val", false);
-        $(falseButton).text(randomQues.possibleAns[1]);
-        $(possibleAnsDiv).html(trueButton);
-        $(possibleAnsDiv).append(falseButton);
-        $('.container').append(possibleAnsDiv);
-        
+//when "start" is pressed, change the display to show a random question + possible answers
+//run timer + display timer
+$(document).ready(function () {
+    var strtBtn = $("<button>").attr("id", "startButton");
+    strtBtn.text("Start");
+    $(".container").html(strtBtn);
 
+    $(document).on("click", "#startButton", function(){
+        displayQuestion();
+    });
+    //run timer after displayCorrect() inside of displayQuestion() runs out
+    //re-run NEW display question and add to answered variable
+
+});
+
+//display a random question + possible answers
+function displayQuestion() {
+    var randomQues = questions[Math.floor(Math.random() * questions.length)];
+    var quesDiv = $("<div>").attr("id", "quesDiv");
+    $(quesDiv).html(randomQues.question);
+    $('.container').html(quesDiv);
+    
+    var possibleAnsDiv = $("<div>").attr("id", "possibleAnsDiv");
+    var trueButton = $("<button>").attr({"val":true, "id":"true"});
+    $(trueButton).text(randomQues.possibleAns[0]);
+    var falseButton = $("<button>").attr({"val":false, "id":"false"});
+    $(falseButton).text(randomQues.possibleAns[1]);
+    $(possibleAnsDiv).html(trueButton);
+    $(possibleAnsDiv).append(falseButton);
+    $('.container').append(possibleAnsDiv); 
+
+    //check to see if correct answer has been selected
+        //compare value of button to randomQues.correctAnswer
+    $(document).on("click", "#true", function() {
+        if (randomQues.correctAnswer === this.val) {
+            whenCorrect()
+        } else {
+            whenWrong();
+        };
+    });
+    $(document).on("click", "#false", function() {
+        if (randomQues.correctAnswer === this.val) {
+            whenCorrect();
+        } else {
+            whenWrong();
+        };
+    });
+    //prepend the .container class to display the time remaining
+    //time remaining should always begin at 30 seconds
+    //if the timer runs out, run the displayfailure() function
+
+
+    //when the user selects an answer before the timer runs out
+    function whenCorrect() {
+        //clear container class html
+        //display "CORRECT!"
+        $(".container").html("<h2>CORRECT!<h2>");
+        //display correct answer
+        displayCorrect();
+        //increase score
+        correct++;
+        answered++;
+    }
+    function whenWrong() {
+        //clear container class html
+        //display "WRONG!"
+        $(".container").html("<h2>WRONG!<h2>");
+        //display correct answer
+        displayCorrect();
+        //increase incorrect
+        incorrect++;
+        answered++;
+    }
+    function displayCorrect() {
         var correctAnsDiv = $("<div>").attr("id", "correctAnsDiv");
         $(correctAnsDiv).html(randomQues.correctAnswer);
         $('.container').append(correctAnsDiv);
-    };
-    
-    function countDown() {
-        time--;
-        var currentTime = timeConverter(time);
-        $(".display").html("<span><p>Time Remaining: <div id='time-left'></div></p></span><br>");
-        $("#time-left").text(currentTime);
-    };
-    function timeConverter(t) {
-
-        //  Takes the current time in seconds and convert it to minutes and seconds (mm:ss).
-        var minutes = Math.floor(t / 60);
-        var seconds = t - (minutes * 60);
-    
-        if (seconds < 10) {
-        seconds = "0" + seconds;
-        }
-    
-        if (minutes === 0) {
-        minutes = "00";
-        }
-    
-        else if (minutes < 10) {
-        minutes = "0" + minutes;
-        }
-    
-        return minutes + ":" + seconds;
     }
-    function timeUp() {
+
+    //when the user fails to select an answer before the timer runs out
+    function displayfailure() {
+        //clear container class html
+        //display "Time's up!"
+        $(".container").html("<h2>TIME'S UP!<h2>");
+        //display correct answer
+        displayCorrect();
+        //increase incorrect
+        unaswered++;
+        answered++;
+    }///end 
+};////////////end of displayQuestion function
+
+//need a 30 second timer that will run with each displayQuestion()
+function thirtySeconds() {
+
+}
+
+//need a 10 second timer that will run AFTER each displayQuestion()
+function tenSeconds() {
+
+}
+
+//need an endGame screen that shows total correct, incorrect, and unaswered
+function endGame () {
+    if (answered === 8) {
+        ///rewrite .container html with "Here's how you did"
+        //append .container with correct
+        //append .container with incorrect
+        //append .container with unanswered
+        //append .container with startOver button
 
     }
-    //calculate questions 1-8
-    //if correct answer is selected, add to "correct" variable and subtract from unanswered
-    //else if incorrect answer is selected, add to "incorrect" variable and subtract from unanswered
-    //make it so that only one option can be selected
-        //question 1
-        //question 2
-        //question 3
-        //question 4
-        //question 5
-        //question 6
-        //question 7
-        //question 8
-
-    //function "done" to update the display with correct, incorrect, and unanswered questions
-        //call that function when timer runs out
-        //call that function when "done" button is clicked
+}
