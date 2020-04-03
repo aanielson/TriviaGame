@@ -3,6 +3,9 @@ var correct = 0;
 var incorrect = 0;
 var answered = 0;
 var unanswered = 0;
+//variable to be updated so that a new question will appear and reset the timers
+var questionDone;
+var autoReset = setTimeout(displayQuestion, 5000);
 
 //create array of objects for questions;
 var questions = [
@@ -61,8 +64,10 @@ $(document).ready(function () {
     $(document).on("click", "#startButton", function(){
         displayQuestion();
         //run timer after displayCorrect() inside of displayQuestion() runs out
+        newQuestion();
         //re-run NEW display question and add to answered variable
     });
+
     endGame();
 
 });
@@ -71,8 +76,11 @@ $(document).ready(function () {
 
 //display a random question + possible answers
 function displayQuestion() {
+    clearTimeout(autoReset);
+    questionDone = false;
+    console.log(questionDone);
     //make the inner html the .container class to display the time remaining
-    var timeleft = 30;
+    var timeleft = 10;
     var clockDiv = $("<div>").attr("id", "clockDiv");
     $(clockDiv).html(timeleft);
     $(".container").html(clockDiv);
@@ -156,7 +164,10 @@ function displayQuestion() {
     function displayCorrect() {
         var correctAnsDiv = $("<div>").attr("id", "correctAnsDiv");
         $(correctAnsDiv).html(randomQues.correctAnswer);
+        $('.container').append("Correct answer: ");
         $('.container').append(correctAnsDiv);
+        questionDone = true;
+        console.log(questionDone);
     }
 
     //when the user fails to select an answer before the timer runs out
@@ -177,8 +188,10 @@ function displayQuestion() {
 };////////////end of displayQuestion function
 
 //need a 10 second timer that will run AFTER each displayQuestion()
-function autoReset() {
-    
+function newQuestion() {
+    if (questionDone === true) {
+        setTimeout(displayQuestion, 10000)
+    };
 }
 
 //need an endGame screen that shows total correct, incorrect, and unaswered
