@@ -48,6 +48,8 @@ var questions = [
     },
 ];
 
+
+
 //display "start" button at the beginning
 //when "start" is pressed, change the display to show a random question + possible answers
 //run timer + display timer
@@ -64,6 +66,8 @@ $(document).ready(function () {
     
 
 });
+
+
 
 //display a random question + possible answers
 function displayQuestion() {
@@ -89,6 +93,10 @@ function displayQuestion() {
         } else {
             whenWrong();
         };
+        console.log("correct: " + correct);
+        console.log("incorrect: " + incorrect);
+        console.log("unanswered: " + unanswered);
+        console.log("answered: " + answered);
     });
     $(document).on("click", "#false", function() {
         if (randomQues.correctAnswer === false) {
@@ -96,6 +104,10 @@ function displayQuestion() {
         } else {
             whenWrong();
         };
+        console.log("correct: " + correct);
+        console.log("incorrect: " + incorrect);
+        console.log("unanswered: " + unanswered);
+        console.log("answered: " + answered);
     });
     //prepend the .container class to display the time remaining
     //time remaining should always begin at 30 seconds
@@ -141,6 +153,8 @@ function displayQuestion() {
         answered++;
     }///end 
 };////////////end of displayQuestion function
+
+
 
 //need a 30 second timer that will run with each displayQuestion()
 function thirtySeconds() {
