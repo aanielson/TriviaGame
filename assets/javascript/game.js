@@ -63,7 +63,7 @@ $(document).ready(function () {
         //run timer after displayCorrect() inside of displayQuestion() runs out
         //re-run NEW display question and add to answered variable
     });
-    
+    endGame();
 
 });
 
@@ -71,24 +71,44 @@ $(document).ready(function () {
 
 //display a random question + possible answers
 function displayQuestion() {
+    //make the inner html the .container class to display the time remaining
+    var timeleft = 30;
+    var clockDiv = $("<div>").attr("id", "clockDiv");
+    $(clockDiv).html(timeleft);
+    $(".container").html(clockDiv);
+
+    var timer = setInterval(function() {
+        timeleft--;
+        $("#clockDiv").html(timeleft);
+        if (timeleft === 0) {
+            clearInterval(timer);
+            displayFailure();
+        }
+    }, 1000);
+    
     var randomQues = questions[Math.floor(Math.random() * questions.length)];
     var quesDiv = $("<div>").attr("id", "quesDiv");
     $(quesDiv).html(randomQues.question);
-    $('.container').html(quesDiv);
+    $('.container').append(quesDiv);
     
     var possibleAnsDiv = $("<div>").attr("id", "possibleAnsDiv");
-    var trueButton = $("<button>").attr({"val":"true", "id":"true"});
+    var trueButton = $("<button>").attr({"val":true, "id":"true"});
     $(trueButton).text(randomQues.possibleAns[0]);
-    var falseButton = $("<button>").attr({"val":"false", "id":"false"});
+    var falseButton = $("<button>").attr({"val":false, "id":"false"});
     $(falseButton).text(randomQues.possibleAns[1]);
     $(possibleAnsDiv).html(trueButton);
     $(possibleAnsDiv).append(falseButton);
     $('.container').append(possibleAnsDiv); 
-
+    
+    
+    
+    //time remaining should always begin at 30 seconds
+    //if the timer runs out, run the displayfailure() function
+    
     //check to see if correct answer has been selected
         //compare value of button to randomQues.correctAnswer
     $(document).on("click", "#true", function() {
-        if ((randomQues.correctAnswer) === (true)) {
+        if ((randomQues.correctAnswer) === true) {
             whenCorrect()
         } else {
             whenWrong();
@@ -109,10 +129,8 @@ function displayQuestion() {
         console.log("unanswered: " + unanswered);
         console.log("answered: " + answered);
     });
-    //prepend the .container class to display the time remaining
-    //time remaining should always begin at 30 seconds
-    //if the timer runs out, run the displayfailure() function
-
+    
+    
 
     //when the user selects an answer before the timer runs out
     function whenCorrect() {
@@ -142,7 +160,7 @@ function displayQuestion() {
     }
 
     //when the user fails to select an answer before the timer runs out
-    function displayfailure() {
+    function displayFailure() {
         //clear container class html
         //display "Time's up!"
         $(".container").html("<h2>TIME'S UP!<h2>");
@@ -151,19 +169,16 @@ function displayQuestion() {
         //increase incorrect
         unanswered++;
         answered++;
+        console.log("correct: " + correct);
+        console.log("incorrect: " + incorrect);
+        console.log("unanswered: " + unanswered);
+        console.log("answered: " + answered);
     }///end 
 };////////////end of displayQuestion function
 
-
-
-//need a 30 second timer that will run with each displayQuestion()
-function thirtySeconds() {
-
-}
-
 //need a 10 second timer that will run AFTER each displayQuestion()
-function tenSeconds() {
-
+function autoReset() {
+    
 }
 
 //need an endGame screen that shows total correct, incorrect, and unaswered
