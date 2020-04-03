@@ -73,9 +73,9 @@ function displayQuestion() {
     $('.container').html(quesDiv);
     
     var possibleAnsDiv = $("<div>").attr("id", "possibleAnsDiv");
-    var trueButton = $("<button>").attr({"val":true, "id":"true"});
+    var trueButton = $("<button>").attr({"val":"true", "id":"true"});
     $(trueButton).text(randomQues.possibleAns[0]);
-    var falseButton = $("<button>").attr({"val":false, "id":"false"});
+    var falseButton = $("<button>").attr({"val":"false", "id":"false"});
     $(falseButton).text(randomQues.possibleAns[1]);
     $(possibleAnsDiv).html(trueButton);
     $(possibleAnsDiv).append(falseButton);
@@ -84,14 +84,14 @@ function displayQuestion() {
     //check to see if correct answer has been selected
         //compare value of button to randomQues.correctAnswer
     $(document).on("click", "#true", function() {
-        if (randomQues.correctAnswer === this.val) {
+        if ((randomQues.correctAnswer) === (true)) {
             whenCorrect()
         } else {
             whenWrong();
         };
     });
     $(document).on("click", "#false", function() {
-        if (randomQues.correctAnswer === this.val) {
+        if (randomQues.correctAnswer === false) {
             whenCorrect();
         } else {
             whenWrong();
