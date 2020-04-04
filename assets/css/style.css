@@ -1,0 +1,72 @@
+body {
+    background-image: url(../images/design-surface.jpg);
+    font-size: 14pt;
+}
+.main {
+    display: block;
+    margin: auto;
+    width: 960px;
+    background-color: #ffffff;
+    border: solid  #dddddd;
+    min-height: 400px;
+    margin-top: 20px;
+    margin-bottom: 60px;
+}
+.display {
+    display: block;
+    margin: auto;
+    width: 900px;
+    min-height: 500px;
+    margin-top: 20px;
+    margin-bottom: 60px;
+}
+#logo {
+    width: 900px;
+    margin-left: 30px;
+    margin-top: 60px;
+    
+}
+h1 {
+    font-size: 50pt;
+    text-align: right;
+    padding-right: 60px;
+}
+h2 {
+    font-size: 30pt;
+}
+button {
+    background-color: darkred;
+    color: ghostwhite;
+    margin-right: 10px;
+}
+#startButton {
+    font-size: 70pt;
+    font-weight: bold;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 100px;
+    padding: 30px;
+}
+#resetButton {
+    font-size: 30pt;
+    font-weight: bold;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 100px;
+    padding: 30px;
+}
+#clockDiv {
+    font-size: 70pt;
+    font-weight: bold;
+    text-align: center;
+    
+}
+#quesDiv {
+    padding-top: 30px;
+    padding-bottom: 10px;
+}
+#possibleAnsDiv {
+
+}

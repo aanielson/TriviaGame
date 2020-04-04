@@ -69,7 +69,8 @@ function displayQuestion() {
     //make the inner html the .container class to display the time remaining
     var timeleft = 30;
     var clockDiv = $("<div>").attr("id", "clockDiv");
-    $(clockDiv).html(timeleft);
+    var clockDisplay = $("<span>").attr("id", "clockDisplay");
+    $(clockDiv).append(timeleft);
     $(".container").html(clockDiv);
 
     var timer = setInterval(function () {
@@ -86,6 +87,7 @@ function displayQuestion() {
         $(quesDiv).html(questions[i].question);
         console.log(questions[i]);
         $('.container').append(quesDiv);
+        
         // TODO: display questions
         var possibleAnsDiv = $("<div>").attr("id", "possibleAnsDiv");
         var trueButton = $("<button>").attr("id", i).attr("value", "true");
@@ -96,7 +98,6 @@ function displayQuestion() {
         $(possibleAnsDiv).append(falseButton);
         $('.container').append(possibleAnsDiv);
     }
-
     /**
      * checks the answer against the question
      * won't evaluate if already clicked
@@ -120,7 +121,6 @@ function displayQuestion() {
                 }
                 questions[index].status = "incorrect";
                 incorrect++;
-
             }
         };
         console.log("correct: " + correct);
@@ -139,7 +139,6 @@ function displayQuestion() {
     $(document).on("click", "[value='false']", function () {
         evaluateAnswer(this.id, this.value)
     });
-    
     // 
 };////////////end of displayQuestion function
 
