@@ -64,10 +64,10 @@ $(document).ready(function () {
     $(document).on("click", "#startButton", function(){
         displayQuestion();
         //run timer after displayCorrect() inside of displayQuestion() runs out
-        newQuestion();
+        
         //re-run NEW display question and add to answered variable
     });
-
+    newQuestion();
     endGame();
 
 });
