@@ -76,7 +76,10 @@ $(document).ready(function () {
 
 //display a random question + possible answers
 function displayQuestion() {
+    //time remaining should always begin at 30 seconds
+    //if the timer runs out, run the displayfailure() function
     clearTimeout(autoReset);
+    
     questionDone = false;
     console.log(questionDone);
     //make the inner html the .container class to display the time remaining
@@ -110,9 +113,6 @@ function displayQuestion() {
     
     
     
-    //time remaining should always begin at 30 seconds
-    //if the timer runs out, run the displayfailure() function
-    
     //check to see if correct answer has been selected
         //compare value of button to randomQues.correctAnswer
     $(document).on("click", "#true", function() {
@@ -137,8 +137,6 @@ function displayQuestion() {
         console.log("unanswered: " + unanswered);
         console.log("answered: " + answered);
     });
-    
-    
 
     //when the user selects an answer before the timer runs out
     function whenCorrect() {

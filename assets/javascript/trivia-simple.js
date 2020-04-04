@@ -57,7 +57,7 @@ $(document).ready(function () {
     strtBtn.text("Start");
     $(".container").html(strtBtn);
 
-    $(document).on("click", "#startButton", function(){
+    $(document).on("click", "#startButton", function () {
         displayQuestion();
     });
 });
@@ -72,7 +72,7 @@ function displayQuestion() {
     $(clockDiv).html(timeleft);
     $(".container").html(clockDiv);
 
-    var timer = setInterval(function() {
+    var timer = setInterval(function () {
         timeleft--;
         $("#clockDiv").html(timeleft);
         if (timeleft === 0) {
@@ -80,67 +80,84 @@ function displayQuestion() {
             endGame();
         }
     }, 1000);
-    
-    for (i=0; i<questions.length; i++) {
+
+    for (i = 0; i < questions.length; i++) {
         var quesDiv = $("<div>").attr("id", "quesDiv");
-        $(quesDiv).html(questions[i]);
+        $(quesDiv).html(questions[i].question);
         console.log(questions[i]);
-        $('.container').append(i + quesDiv);
-        
+        $('.container').append(quesDiv);
+        // TODO: display questions
         var possibleAnsDiv = $("<div>").attr("id", "possibleAnsDiv");
-        var trueButton = $("<button>").attr("id", "true");
+        var trueButton = $("<button>").attr("id", i).attr("value", "true");
         $(trueButton).text(questions[i].possibleAns[0]);
-        var falseButton = $("<button>").attr("id", "false");
+        var falseButton = $("<button>").attr("id", i).attr("value", "false");
         $(falseButton).text(questions[i].possibleAns[1]);
         $(possibleAnsDiv).html(trueButton);
         $(possibleAnsDiv).append(falseButton);
-        $('.container').append(possibleAnsDiv); 
+        $('.container').append(possibleAnsDiv);
     }
-        //check to see if correct answer has been selected
-            //compare value of button to randomQues.correctAnswer
-    for (i=0; i<questions.length; i++) {
-        $(document).on("click", "#true", function() {
-            if ((questions[i].correctAnswer) === questions[i].possibleAns[0]) {
+
+    /**
+     * checks the answer against the question
+     * won't evaluate if already clicked
+     */
+    function evaluateAnswer(index, value) {
+        if (!questions[index].status) {
+            unanswered--;
+        }
+        if (questions[index].correctAnswer === value.toUpperCase()) {
+            if (questions[index].status != "correct") {
+                if (questions[index].status == "incorrect") {
+                    incorrect--;
+                }
+                questions[index].status = "correct";
                 correct++;
-                unanswered--;
-            } else {
+            }
+        } else {
+            if (questions[index].status != "incorrect") {
+                if (questions[index].status == "correct") {
+                    correct--;
+                }
+                questions[index].status = "incorrect";
                 incorrect++;
-                unanswered--;
-            };
-            console.log("correct: " + correct);
-            console.log("incorrect: " + incorrect);
-            console.log("unanswered: " + unanswered);
-        });
-        $(document).on("click", "#false", function() {
-            if (questions[i].correctAnswer === questions[i].possibleAns[1]) {
-                correct++;
-                unanswered--;
-            } else {
-                incorrect++;
-                unanswered--;
-            };
-            console.log("correct: " + correct);
-            console.log("incorrect: " + incorrect);
-            console.log("unanswered: " + unanswered);
-        });
+
+            }
+        };
+        console.log("correct: " + correct);
+        console.log("incorrect: " + incorrect);
+        console.log("unanswered: " + unanswered);
     }
+    //check to see if correct answer has been selected
+    //compare value of button to randomQues.correctAnswer
+    // for (i=0; i<questions.length; i++) {
+    $(document).on("click", "[value='true']", function () {
+        console.log(this);
+        console.log(this.value);
+        console.log(this.id);
+        evaluateAnswer(this.id, this.value);
+    });
+    $(document).on("click", "[value='false']", function () {
+        evaluateAnswer(this.id, this.value)
+    });
+    
+    // 
 };////////////end of displayQuestion function
 
 //need an endGame screen that shows total correct, incorrect, and unaswered
-function endGame () {
-        ///rewrite .container html with "Here's how you did"
+function endGame() {
+    ///rewrite .container html with "Here's how you did"
     $(".container").html("<h2>All done, here's how you did!</h2>");
     //append .container with correct
-    $(".container").text("Correct Answers: " + correct);
+    $(".container").append("Correct Answers: " + correct + "<br>");
     //append .container with incorrect
-    $(".container").text("Incorrect Answers: " + incorrect);
+    $(".container").append("Incorrect Answers: " + incorrect + "<br>");
     //append .container with unanswered
-    $(".container").text("Unanswered: " + unanswered);
+    $(".container").append("Unanswered: " + unanswered + "<br>");
     //append .container with startOver button
     var resetBtn = $("<button>").attr("id", "resetButton");
     resetBtn.text("Start Over?");
     $(".container").append(resetBtn);
-    $(document).on("click", "#resetButton", function(){
+    $(document).on("click", "#resetButton", function () {
         reset();
     });
 }
