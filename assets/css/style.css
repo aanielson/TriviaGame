@@ -25,9 +25,14 @@ body {
     margin-top: 10px;    
 }
 h1 {
-    font-size: 40pt;
+    font-size: 70pt;
+    font-weight: bolder;
     text-align: center;
     padding-right: 60px;
+    color: goldenrod;
+    text-shadow: 2px 2px blue;
+    margin-top: 20px;
+    text-align: center;
 }
 h2 {
     font-size: 20pt;
