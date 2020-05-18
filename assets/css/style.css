@@ -5,34 +5,32 @@ body {
 .main {
     display: block;
     margin: auto;
-    width: 960px;
+    width: 900px;
     background-color: #ffffff;
     border: solid  #dddddd;
     min-height: 400px;
-    margin-top: 20px;
+    margin-top: 50px;
     margin-bottom: 60px;
 }
 .display {
     display: block;
     margin: auto;
-    width: 900px;
+    width: 90%;
     min-height: 500px;
-    margin-top: 20px;
+    margin-top: 50px;
     margin-bottom: 60px;
 }
 #logo {
-    width: 900px;
-    margin-left: 30px;
-    margin-top: 60px;
-    
+    width: 100%;
+    margin-top: 10px;    
 }
 h1 {
-    font-size: 50pt;
-    text-align: right;
+    font-size: 40pt;
+    text-align: center;
     padding-right: 60px;
 }
 h2 {
-    font-size: 30pt;
+    font-size: 20pt;
 }
 button {
     display: block; 
