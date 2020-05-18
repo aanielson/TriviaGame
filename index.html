@@ -3,20 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS Reset Sheet -->
     <link rel="stylesheet" href="assets/css/reset.css">
+    <!--Bootstrap link-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- My own CSS Sheet -->
     <link rel="stylesheet" href="assets/css/style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    
     <title>Pokemon Trivia</title>
 </head>
 <body>
-    <div class="main"> 
-        <img src="assets/images/Pokémon_logo.png" alt="Pokemon" id="logo" />
+    <div class="main" id="wrapper"> 
+        <img src="./assets/images/Pokémon_logo.png" alt="Pokemon" id="logo" />
         <h1>Trivia!</h1>
-        <div class="display container">
-            
+        <div class="display container" id="sub-wrapper">
+            <div id="quiz-area">
+                <button id="startButton">Start</button>
+            </div>
         </div>
     </div>
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!--My Javascript-->
     <script src="assets/javascript/trivia-simple.js"></script>
 </body>
 </html>
